@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff8f4">
+  <title>Satu surat kecil untukmu</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="page topbar">
+    <div class="brand"><span class="brand-heart" aria-hidden="true">♥</span> surat kecil</div>
+    <div class="top-note">dibuat dengan tulus, untukmu</div>
+  </header>
+
+  <main>
+    <section class="page hero" aria-labelledby="hero-title">
+      <span class="doodle doodle-one" aria-hidden="true">✳</span>
+      <span class="doodle doodle-two" aria-hidden="true">♡</span>
+      <span class="doodle doodle-three" aria-hidden="true">✿</span>
+      <span class="doodle doodle-four" aria-hidden="true">♡</span>
+      <div class="hero-content">
+        <p class="eyebrow">ada yang ingin kusampaikan</p>
+        <h1 id="hero-title">Boleh kita<br><span>mulai lagi?</span></h1>
+        <p class="hero-copy">Aku menulis ini pelan-pelan, karena ada hal yang rasanya lebih baik kusampaikan dari hati ke hati.</p>
+        <a class="button button-primary" href="#surat">Baca suratku <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="scroll-cue">satu surat kecil untukmu</div>
+    </section>
+
+    <section class="page letter-wrap" id="surat" aria-labelledby="letter-heading">
+      <article class="letter">
+        <h2 class="letter-title" id="letter-heading">Hai, kamu.</h2>
+        <p>Aku sudah banyak memikirkan tentang kita. Tentang hal-hal baik yang pernah kita bagi, juga tentang bagian-bagian yang mungkin dulu belum bisa kita jaga dengan baik.</p>
+        <p>Aku tidak ingin berpura-pura bahwa semuanya bisa langsung kembali seperti semula. Kalau kita mencoba lagi, aku ingin kita melakukannya dengan lebih jujur, lebih sabar, dan sama-sama belajar dari yang kemarin.</p>
+        <p>Aku masih peduli sama kamu. Kalau di hatimu masih ada ruang, aku ingin mengajakmu untuk ngobrol dan melihat apakah kita bisa membangun sesuatu yang lebih baik, pelan-pelan.</p>
+        <p>Tak perlu menjawab sekarang. Apa pun jawabanmu, aku akan menghargainya.</p>
+        <p class="signoff">Dengan tulus,<br><span class="signature">seseorang yang masih menyayangimu</span></p>
+      </article>
+      <div class="little-note"><span aria-hidden="true">☁</span><span>Ini bukan tuntutan atau janji bahwa semuanya akan mudah. Aku cuma ingin jujur tentang perasaanku dan membuka ruang untuk bicara.</span></div>
+    </section>
+
+    <section class="page question" aria-labelledby="question-heading">
+      <p class="eyebrow">jadi, bagaimana menurutmu?</p>
+      <h2 id="question-heading">Maukah kita<br>mencoba lagi?</h2>
+      <p class="question-copy">Apa pun seng pean rasakan, pean boleh menyampaikannya dengan jujur kok. Aku akan mendengarkan.</p>
+      <div class="choices" aria-label="Pilihan jawaban">
+        <button class="button button-primary" type="button" data-response="yes">Aku mau coba lagi <span aria-hidden="true">♡</span></button>
+        <button class="button button-soft" type="button" data-response="time">Aku butuh waktu</button>
+        <button class="button button-soft" type="button" data-response="no">Aku belum bisa</button>
+      </div>
+      <div class="response" id="response" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="page">Dibuat sepenuh hati <span aria-hidden="true">♥</span></footer>
+
+  <script>
+    const responseBox = document.querySelector("#response");
+    const replies = {
+      yes: {
+        title: "Terima kasih sudah memberiku kesempatan lagi :). ♡",
+        message: "Aku bahagia rasanya, makasih ya orang baik, akan ku jaga sepenuh hati yanh kali ini biar ga salah lagi."
+      },
+      time: {
+        title: "Em. Aku ngerti kok lek pean mungkin perlu waktu sek :)",
+        message: "Ta nteni kok, aku tetep menunggu kamu, kalau udah bilang yaa ."
+      },
+      no: {
+        title: "oala :(.",
+        message: "Yawesla aku paham, lek misal sampean belum bisa, tapi aku bakal terus menunggu kok, aku percaya suatu hari pasti kembali :)."
+      }
+    };
+
+    document.querySelectorAll("[data-response]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const reply = replies[button.dataset.response];
+        responseBox.replaceChildren();
+        const title = document.createElement("strong");
+        title.textContent = reply.title;
+        const message = document.createElement("span");
+        message.textContent = reply.message;
+        responseBox.append(title, message);
+        responseBox.classList.add("visible");
+        if (button.dataset.response === "yes") {
+          for (let index = 0; index < 12; index += 1) {
+            const heart = document.createElement("span");
+            heart.className = "floating-heart";
+            heart.textContent = index % 2 === 0 ? "♥" : "♡";
+            heart.setAttribute("aria-hidden", "true");
+            heart.style.left = `${8 + Math.random() * 84}%`;
+            heart.style.color = index % 2 === 0 ? "#d96f78" : "#eaa5a4";
+            heart.style.fontSize = `${14 + Math.random() * 18}px`;
+            heart.style.animationDelay = `${Math.random() * .7}s`;
+            document.body.append(heart);
+            heart.addEventListener("animationend", () => heart.remove(), { once: true });
+          }
+        }
+        responseBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      });
+    });
+  </script>
+</body>
+</html>
